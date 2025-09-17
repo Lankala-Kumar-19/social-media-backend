@@ -20,4 +20,5 @@ const commentSchema:Schema<IComment> = new Schema({
     timestamps:true
 });
 
+commentSchema.index({post:1},{unique:true});
 export const CommentModel:Model<IComment> = mongoose.model<IComment>("Comment",commentSchema);

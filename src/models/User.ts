@@ -27,8 +27,17 @@ const userSchema: Schema<IUser> = new Schema({
     avatar: {type:String},
     role: {type:String,enum: Object.values(Role),required:true},
     // posts:[{type:Types.ObjectId,ref:'Post'}]
-},{
-    timestamps:true
-});
+}
+,{
+    timestamps:true,
+    toJSON:{
+        transform:(_doc,ret:any)=>{
+            delete ret._id;
+            delete ret.__v;
+            delete ret.password;
+        },
+    },
+}
+);
 
 export const UserModel:Model<IUser> = mongoose.model<IUser>("User",userSchema);
