@@ -10,5 +10,6 @@ router.post('/',createUser);
 
 router.post('/login',loginUser);
 
-router.delete('/',deleteAllUser)
+router.delete('/',authMiddleware,deleteAllUser)
+
 export default router;
