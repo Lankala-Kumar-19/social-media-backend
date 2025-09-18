@@ -10,7 +10,7 @@ const router = express.Router();
 // GET ROUTES
 router.get('/',authMiddleware,requireRole('ADMIN'),getAllUser);
 
-router.get('/:email',authMiddleware,findUser);
+router.get('/:id',authMiddleware,findUser);
 
 
 // POST ROUTES
@@ -21,12 +21,12 @@ router.post('/login',loginUser);
 
 // PUT ROUTES
 
-router.put('/update/:email',authMiddleware,requireOwnershipOrAdmin('email'),updateUser);
+router.put('/update/:id',authMiddleware,requireOwnershipOrAdmin('id'),updateUser);
 
 // DELETE ROUTES
 
 router.delete('/',authMiddleware,requireRole('ADMIN'),deleteAllUser)
 
-router.delete('/delete/:email',authMiddleware,requireOwnershipOrAdmin('email'),deleteUser);
+router.delete('/delete/:id',authMiddleware,requireOwnershipOrAdmin('id'),deleteUser);
 
 export default router;

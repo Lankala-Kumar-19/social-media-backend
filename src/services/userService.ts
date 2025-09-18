@@ -2,7 +2,9 @@
 import { UserModel } from "../models/User";
 import { Request,Response,NextFunction } from "express";
 import bcrypt from 'bcrypt';
-import { json } from "stream/consumers";
+
+
+
 export async function getAllUser(req:Request,res:Response,next:NextFunction){
 
     try{
@@ -12,6 +14,8 @@ export async function getAllUser(req:Request,res:Response,next:NextFunction){
         next(err);
     }
 }
+
+
 export async function createUser(req:Request,res:Response,next:NextFunction){
     try{
         const user=req.body;
@@ -38,8 +42,8 @@ export async function deleteAllUser(req:Request,res:Response,next:NextFunction){
 
 export async function updateUser(req:Request,res:Response,next:NextFunction) {
     try{
-        const email = req.params.email;
-        const user = await UserModel.findOneAndUpdate({email},req.body,{
+        const id = req.params.userId;
+        const user = await UserModel.findOneAndUpdate({id},req.body,{
             new:true,
             runValidators:true
         });
@@ -52,8 +56,8 @@ export async function updateUser(req:Request,res:Response,next:NextFunction) {
 
 export async function deleteUser(req:Request,res:Response,next:NextFunction) {
     try{
-        const email = req.params.email;
-        const user =await UserModel.findOneAndDelete({email});
+        const id = req.params.userId;
+        const user =await UserModel.findOneAndDelete({id});
         res.status(200).json({msg:`user deleted`,user});
     }catch(err){
         next(err);
@@ -62,8 +66,8 @@ export async function deleteUser(req:Request,res:Response,next:NextFunction) {
 
 export async function findUser(req:Request,res:Response,next:NextFunction){
     try{
-        const email = req.params.email;
-        const user = await UserModel.findOne({email});
+        const id = req.params.userId;
+        const user = await UserModel.findOne({id});
         if(!user) return res.status(400).json({msg: `user not found`});
         return res.status(201).json(user);
 

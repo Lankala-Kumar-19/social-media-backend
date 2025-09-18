@@ -5,7 +5,10 @@ import jwt from 'jsonwebtoken';
 const secret = process.env.JWT_SECRET || 'qwertyuiopasdfghjklzxcvbnm';
 
 export interface AuthRequest extends Request{
-    user?:any;
+    user?:{
+        userId: string;
+        role: 'USER' | 'ADMIN';
+    };
 }
 
 export function authMiddleware(req: AuthRequest,res:Response,next:NextFunction){
@@ -16,7 +19,7 @@ export function authMiddleware(req: AuthRequest,res:Response,next:NextFunction){
     }
     const token = authHeader.split(' ')[1] || '';
     try{
-        const decoded = jwt.verify(token, secret);
+        const decoded = jwt.verify(token, secret) as {userId:string, role: 'USER' | 'ADMIN'};
         req.user = decoded;
         next();
     }catch(err){

@@ -25,7 +25,12 @@ const postSchema:Schema<IPost> = new Schema({
     // comments:[{type:mongoose.Schema.Types.ObjectId,ref:'Comment'}]
 
 },{
-    timestamps:true
+    timestamps:true,
+    toJSON:{
+        transform:(_doc,ret:any)=>{
+            delete ret.__v;
+        }
+    }
 });
 
 postSchema.index({tags:1},{unique:true});
