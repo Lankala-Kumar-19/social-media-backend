@@ -10,8 +10,8 @@ export interface IPost extends Document{
     createdAt?:Date;
     updatedAt?:Date;
     author:Types.ObjectId | IUser;
-    likes: Types.ObjectId |IUser[];
-    comments: Types.ObjectId |IComment[];
+    likes: Types.ObjectId[];
+    comments?: Types.ObjectId[];
 
 }
 
@@ -21,7 +21,7 @@ const postSchema:Schema<IPost> = new Schema({
     tags:{type:[String]},
     slug:{type:String,required:true,unique:true},
     author:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},
-    // likes:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
+    likes:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
     // comments:[{type:mongoose.Schema.Types.ObjectId,ref:'Comment'}]
 
 },{
@@ -33,7 +33,7 @@ const postSchema:Schema<IPost> = new Schema({
     }
 });
 
-postSchema.index({tags:1},{unique:true});
+
 
 postSchema.pre<IPost>('validate',async function (next) {
     if(this.isNew ||this.isModified('title')){
@@ -56,10 +56,10 @@ postSchema.virtual('comments',{
     localField:'_id',
     foreignField:'post'
 });
-postSchema.virtual('likes',{
-    ref:'Like',
-    localField:'_id',
-    foreignField:'post'
-});
+// postSchema.virtual('likes',{
+//     ref:'Like',
+//     localField:'_id',
+//     foreignField:'post'
+// });
 
 export const PostModel:Model<IPost> = mongoose.model<IPost>("Post",postSchema); 
