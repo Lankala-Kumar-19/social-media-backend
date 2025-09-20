@@ -2,7 +2,9 @@
 
 A full-stack-ready backend for a social media platform similar to Instagram. This project includes user authentication, following/followers, post creation with tags and slugs, liking/unliking, and commenting functionality — built with **Node.js**, **Express**, **MongoDB**, and **Mongoose**.
 
----
+Backend - live server : https://social-media-backend-g27f.onrender.com
+
+Back-end 
 
 ## 🚀 Features
 
